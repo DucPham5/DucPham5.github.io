@@ -1,0 +1,14 @@
+body{
+    
+}
+#header{
+    background-color: white;
+    color:black;
+    text-align: center;
+    border-bottom: 2px solid gray;
+}
+
+#logo{
+    width: 250px;
+    height:150px;
+}
