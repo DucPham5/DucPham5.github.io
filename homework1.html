@@ -29,18 +29,13 @@ Description: The following html document is structured to create a form for a ho
         <form action="homework1-thankyou.html">
             <table class="form">
                 <th class="form" colspan="3">Patient Form</th>
-                <tr >
-                    <!-- First Name -->
-                    <td><label for="firstName">First Name:</label></td>
-                    <td><input type="text" name="firstName" maxlength="30" required></td>
-
-                    <!-- Middle Initial -->
-                    <td><label for="middleInitial">Middle Initial:</label></td>
-                    <td><input type="text" name="middleInitial" maxlength="1" style="width: 40px;" required></td>
-
-                    <!-- Last Name -->
-                    <td><label for="lasName">Last Name:</label></td>
-                    <td><input type="text" name="lastName" maxlength="30" required></td>
+                <tr>
+                    <td><label for="fullName">Name:</label></td>
+                    <td colspan="3">
+                        <input type="text" id="firstName" name="firstName" maxlength="30" placeholder="First" required>
+                        <input type="text" id="middleInitial" name="middleInitial" maxlength="1" style="width:40px" placeholder="MI">
+                        <input type="text" id="lastName" name="lastName" maxlength="30" placeholder="Last" required>
+                    </td>
                 </tr>
                 <tr><!--DOB-->
                     <td><label for="dob">Date of Birth:</label></td>
@@ -67,77 +62,68 @@ Description: The following html document is structured to create a form for a ho
                     <td><input type="text" id="address2" name="address2"></td>
                 </tr>
                 <tr>
-                    <td><label for="city">City</label></td>
-                    <td><input type="text" name="city" id="city"></td>
-
-                    <td><label for="state">State</label></td>
-                    <td><select style="width: 100px;"required>
-                        <option value=""></option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
+                    <td><label for="cityStateZip">City / State / ZIP:</label></td>
+                    <td>
+                        <input type="text" id="city" name="city" placeholder="City" style="width:120px; margin-right:5px;" required>
+                        
+                        <select id="state" name="state" required style="width:100px; margin-right:5px;">
+                            <option value=""></option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option> 
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                            <!-- Add all states -->
+                        </select>
+                        
+                        <input type="text" id="zip" name="zip" maxlength="5" placeholder="ZIP" style="width:60px;" required>
                     </td>
-                    <td><label for="zip">ZIP</label></td>
-                    <td><input type="text" 
-                    pattern="[0-9]{5}"
-                    size="5"
-                    maxlength="5" 
-                    id="zip" 
-                    name="zip" 
-                    required
-                    oninvalid="this.setCustomValidity('5 Digit Zip/Postal Code required')"
-                    oninput="this.setCustomValidity('')"
-                    placeholder="00000"
-                    ></td>
                 </tr>
                 <tr>
                     <td><label for="email">Email:</label></td>
@@ -264,6 +250,10 @@ Description: The following html document is structured to create a form for a ho
             </table>
         </form>
 
+    </div>
+    <div id = "footer">
+        <p>Duc's Medical Center</p>
+        <a href="mailto:dmpham8@cougarnet.uh.edu" class="email-btn">Contact Us</a>
     </div>
 <script>
     document.getElementById("currentDate").innerHTML = new Date().toLocaleDateString();
