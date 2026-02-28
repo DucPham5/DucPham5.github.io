@@ -1,1 +1,41 @@
-<p>thank you for submission</p>
+    <!--
+    Program name: patient-form
+    Author: Duc Pham
+    Date Created: 02/11/2026
+    Date Last Edited: 02/11/2026
+    Version: 1.0
+    Description: The following html document is structured to create a form for a hos
+    -->
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="HW1" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="homework1.css">
+        <title>HW1</title>
+    </head>
+    <body>
+        <div id="header">
+            <img src="medicallogo.jpg" alt="logo" id="logo">
+
+            <!-- Company Name -->
+            <h1>Duc Medical Center</h1>
+
+            <!-- Dynamic Date -->
+            <p>Today is: <span id="currentDate"></span></p>
+        </div>
+        <div id = "thankyou-box">
+            <p>Thank you for your submission!</p>
+            <!--Go back button-->
+            <a href="homework1.html" class="back-btn">Go Back</a>
+        </div>
+        <div id = "footer">
+            <p>Duc's Medical Center</p>
+            <a href="mailto:dmpham8@cougarnet.uh.edu" class="email-btn">Contact Us</a>
+        </div>
+    <script>
+        document.getElementById("currentDate").innerHTML = new Date().toLocaleDateString();
+    </script>
+    </body>
+    </html>

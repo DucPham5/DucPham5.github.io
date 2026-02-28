@@ -1,40 +1,181 @@
+html{
+    height: 100%;
+    margin:0;
+}
+#body-content {
+    flex: 1;   /* This pushes footer down */
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    height: 100%;
+    background-color: red;
+    padding: 0;
+    margin: 0;
+}
 #body-content{
+    background-color: white;
     display: flex;
     justify-content: center;
+    border-style:solid;
+    border-color:#ccc;
 }
-#header{
+
+.form{
+    margin-top: 10px;
+    margin-bottom:10px;
+    border-style:solid;
+    background-color:rgb(153,135,103);
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+.form th{
+    background-color: #ccc;
+    border-style: solid;
+    border-color: #ccc;
+}
+
+.paper{
     background-color: white;
-    color:black;
+}
+
+#header{
+    font-family: Georgia, 'Times New Roman', Times, serif ;
+    color:white;
     text-align: center;
-    border-bottom: 2px solid gray;
+    border-bottom: 1px solid #ccc; 
 }
 
 #logo{
-    width: 250px;
-    height:150px;
+    width: 120px;
+    height:100px;
+    border-radius: 150px;
 }
 table td:first-child {
     text-align: right;
-    padding-right: 8px; /* small gap between label and input */
+    padding-right: 8px; 
 }
 
 #footer {
-    border-top: 1px solid #ccc;  
-    margin-top: 20px;            
-    padding-top: 10px;          
+    font-family: Georgia, 'Times New Roman', Times, serif ;
+    color: white;
+    border-top: 1px solid #ccc;           
     text-align: center;
 }
 
 .email-btn {
     display: inline-block;
-    background-color: rgb(197, 190, 190);
+    background-color: #ccc;
     color: white;
     padding: 8px 16px;
     text-decoration: none;
     border-radius: 4px;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 .email-btn:hover {
+    background-color: gray;
+}
+
+html{
+    height: 100%;
+    margin:0;
+}
+#body-content {
+    flex: 1;   /* This pushes footer down */
+}
+body{
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    background-color: red;
+    padding: 0;
+    margin: 0;
+}
+#body-content{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    border-style:solid;
+    border-color:#ccc;
+}
+
+.form{
+    margin-top: 10px;
+    margin-bottom:10px;
+    border-style:solid;
+    background-color:rgb(153,135,103);
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+.form th{
+    background-color: #ccc;
+    border-style: solid;
+    border-color: #ccc;
+}
+
+.paper{
+    background-color: white;
+}
+
+#header{
+    color:white;
+    text-align: center;
+    border-bottom: 1px solid #ccc; 
+}
+
+#logo{
+    width: 120px;
+    height:100px;
+    border-radius: 150px;
+}
+table td:first-child {
+    text-align: right;
+    padding-right: 8px; 
+}
+
+#footer {
+    
+    color: white;
+    border-top: 1px solid #ccc;           
+    text-align: center;
+}
+
+.email-btn {
+    display: inline-block;
+    background-color: #ccc;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;    
+}
+
+.email-btn:hover {
+    background-color: gray;
+}
+
+#thankyou-box {
+    background-color: white;
+    flex: 1;
+    text-align: center;
+}
+
+#thankyou-box p {
+    margin-bottom: 15px;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #ccc;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-btn:hover {
     background-color: gray;
 }
