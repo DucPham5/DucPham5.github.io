@@ -205,3 +205,10 @@ table td:first-child {
     color: red;
     font-weight:bold;
 }
+
+.successMsg {
+    color: green;
+}
+.errorMsg {
+    color: red;
+}
