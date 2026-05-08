@@ -1,0 +1,374 @@
+<!--
+    Program name: patient-form hw4
+    Author: Duc Pham
+    Date Created: 04/20/2026
+    Date Last Edited: 05/08/2026
+    Version: 4.0
+    Description: Hospital patient registration form with full JS validation, Fetch API,
+                 iFrame, fixed header/footer, cookies, and localStorage
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="homework4.css">
+    <script src="homework4.js"></script>
+    <title>HW4 - Cedarwood Medical Center</title>
+</head>
+<body>
+    <div id="header">
+        <img src="medicallogo.jpg" alt="Cedarwood Medical Center Logo" id="logo">
+        <h1>Cedarwood Medical Center</h1>
+        <p id="welcomeMsg">Welcome, New User!</p>
+        <p>Today is: <span id="currentDate"></span></p>
+    </div>
+
+    <div id="body-content">
+        <div class="paper">
+            <div id="cookieNotice" style="background:#fff8e1; border:1px solid #f9a825; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.92em; display:none;">
+                <strong>Welcome back!</strong> Your information has been pre-filled.
+                &nbsp;|&nbsp;
+                <a onclick="startAsNewUser()" style="color:#8b0000; cursor:pointer; text-decoration:underline;">Not you? Click here to start as a new user.</a>
+            </div>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3464.614!2d-95.3428!3d29.7174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDQzJzAyLjYiTiA5NcKwMjAnMzQuMSJX!5e0!3m2!1sen!2sus!4v1"
+                width="100%" height="250"
+                style="border:2px solid #8b0000; border-radius:6px;"
+                allowfullscreen loading="lazy"
+                title="Cedarwood Medical Center Location">
+            </iframe>
+            <form action="homework4-thankyou.html" onsubmit="handleSubmitCookie(); return validateForm()">
+                <table class="form">
+
+                    <tr>
+                        <th colspan="2">Patient Registration Form</th>
+                    </tr>
+
+                    <tr><!--First / MI / Last-->
+                        <td><label for="firstName">Name:</label></td>
+                        <td>
+                            <input type="text" id="firstName" name="firstName" maxlength="30"
+                                pattern="[A-Za-z'-]{1,30}"
+                                title="First name: 1-30 letters only. Apostrophes and dashes allowed. No numbers or symbols."
+                                placeholder="First name (required)"
+                                required
+                                onblur="validateFirstName(); saveField('firstName')"
+                                oninput="validateFirstName()">
+                            <span id="firstNameMsg" class="errorMsg"></span>
+                            <br>
+                            <input type="text" id="middleInitial" name="middleInitial" maxlength="1"
+                                style="width:40px" placeholder="MI"
+                                pattern="[A-Za-z]"
+                                title="Middle initial: one letter only, optional field"
+                                onblur="validateMiddleInitial(); saveField('middleInitial')"
+                                oninput="validateMiddleInitial()">
+                            <span id="middleInitialMsg" class="errorMsg"></span>
+                            <br>
+                            <input type="text" id="lastName" name="lastName" maxlength="30"
+                                placeholder="Last name (required)"
+                                pattern="[A-Za-z'-]{1,30}"
+                                title="Last name: 1-30 letters only. Apostrophes and dashes allowed. No numbers or symbols."
+                                required
+                                onblur="validateLastName(); saveField('lastName')"
+                                oninput="validateLastName()">
+                            <span id="lastNameMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--DOB-->
+                        <td><label for="dob">Date of Birth:</label></td>
+                        <td>
+                            <input type="date" id="dob" name="dob"
+                                min="1903-01-01" max="2026-12-31"
+                                title="Date of birth: must be a real date, cannot be in the future, and cannot be more than 120 years ago"
+                                required
+                                onblur="validateDOB(); saveField('dob')"
+                                oninput="validateDOB()">
+                            <span id="dobMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Phone-->
+                        <td><label for="phone">Phone Number:</label></td>
+                        <td>
+                            <input type="text" id="phone" name="phone"
+                                placeholder="000-000-0000"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                title="Phone number: 10 digits in format 000-000-0000. Dashes required."
+                                required
+                                onblur="validatePhone(); saveField('phone')"
+                                oninput="validatePhone()">
+                            <span id="phoneMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--SSN — NOT saved to localStorage-->
+                        <td><label for="ssn">Social Security Number:</label></td>
+                        <td>
+                            <input type="password" id="ssn" name="ssn"
+                                maxlength="11"
+                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}"
+                                placeholder="000-00-0000"
+                                title="SSN: 9 digits in format 000-00-0000. Dashes are inserted automatically as you type. Field is obscured for privacy."
+                                required
+                                onblur="validateSSN()"
+                                oninput="formatSSN()">
+                            <span id="ssnMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Address1-->
+                        <td><label for="address1">Address Line 1:</label></td>
+                        <td>
+                            <input type="text" id="address1" name="address1"
+                                pattern=".{2,30}"
+                                title="Address Line 1: required, 2-30 characters. Enter your street number and name."
+                                placeholder="Street number and name (required)"
+                                required
+                                onblur="validateAddress1(); saveField('address1')"
+                                oninput="validateAddress1()">
+                            <span id="address1Msg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Address2-->
+                        <td><label for="address2">Address Line 2:</label></td>
+                        <td>
+                            <input type="text" id="address2" name="address2"
+                                pattern=".{2,30}"
+                                title="Address Line 2: optional. If entered, must be 2-30 characters. Use for apartment, suite, or unit number."
+                                placeholder="Apt, suite, or unit (optional)"
+                                onblur="validateAddress2(); saveField('address2')"
+                                oninput="validateAddress2()">
+                            <span id="address2Msg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--City/State/ZIP-->
+                        <td><label for="city">City / State / ZIP:</label></td>
+                        <td>
+                            <input type="text" id="city" name="city"
+                                placeholder="City (required)"
+                                style="width:120px; margin-right:5px;"
+                                pattern=".{2,30}"
+                                title="City: required, 2-30 characters"
+                                required
+                                onblur="validateCity(); saveField('city')"
+                                oninput="validateCity()">
+                            <span id="cityMsg" class="errorMsg"></span>
+
+                            <select id="state" name="state" required
+                                style="width:130px; margin-right:5px;"
+                                title="State: select your state or territory from the list"
+                                onblur="validateState()"
+                                onchange="validateState(); saveField('state')">
+                            </select>
+                            <span id="stateMsg" class="errorMsg"></span>
+
+                            <input type="text" id="zip" name="zip"
+                                pattern="\d{5}(-\d{4})?"
+                                maxlength="10"
+                                placeholder="ZIP"
+                                style="width:70px;"
+                                title="ZIP code: required, 5 digits (e.g. 77002) or ZIP+4 format (e.g. 77002-1234)"
+                                required
+                                onblur="validateZip(); saveField('zip')"
+                                oninput="validateZip()">
+                            <span id="zipMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Email-->
+                        <td><label for="email">Email:</label></td>
+                        <td>
+                            <input type="email" id="email" name="email"
+                                placeholder="example@email.com (required)"
+                                title="Email: required, must be in format name@domain.tld. Will be converted to lowercase automatically."
+                                required
+                                onblur="validateEmail(); saveField('email')"
+                                oninput="validateEmail()">
+                            <span id="emailMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Symptoms-->
+                        <td><label for="symptoms">Current Symptoms:</label></td>
+                        <td>
+                            <textarea id="symptoms" name="symptoms"
+                                rows="3" cols="50"
+                                title="Optional. If entered, must be at least 5 characters. Describe any current symptoms or medical concerns."
+                                placeholder="Describe your current symptoms or medical concerns (optional, 5+ characters if entered)..."
+                                onblur="validateSymptoms(); saveField('symptoms')"
+                                oninput="validateSymptoms()"></textarea>
+                            <span id="symptomsMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Checkboxes-->
+                        <td>Prior Conditions<br><small>(check all that apply)</small></td>
+                        <td>
+                            <input type="checkbox" id="chickenpox" name="conditions" value="chickenpox" onchange="saveCheckboxes()">
+                            <label for="chickenpox">Chicken Pox</label>&nbsp;&nbsp;
+
+                            <input type="checkbox" id="measles" name="conditions" value="measles" onchange="saveCheckboxes()">
+                            <label for="measles">Measles</label>&nbsp;&nbsp;
+
+                            <input type="checkbox" id="covid" name="conditions" value="covid" onchange="saveCheckboxes()">
+                            <label for="covid">COVID-19</label>&nbsp;&nbsp;
+
+                            <input type="checkbox" id="smallpox" name="conditions" value="smallpox" onchange="saveCheckboxes()">
+                            <label for="smallpox">Small Pox</label>&nbsp;&nbsp;
+
+                            <input type="checkbox" id="tetanus" name="conditions" value="tetanus" onchange="saveCheckboxes()">
+                            <label for="tetanus">Tetanus</label>
+                        </td>
+                    </tr>
+
+                    <tr><!--Gender-->
+                        <td>Gender: <span style="color:#ffcccc;font-size:0.8em;">(required)</span></td>
+                        <td>
+                            <input type="radio" id="male" name="gender" value="male"
+                                onchange="validateGender(); saveRadio('gender')">
+                            <label for="male">Male</label>&nbsp;&nbsp;
+
+                            <input type="radio" id="female" name="gender" value="female"
+                                onchange="validateGender(); saveRadio('gender')">
+                            <label for="female">Female</label>&nbsp;&nbsp;
+
+                            <input type="radio" id="other" name="gender" value="other"
+                                onchange="validateGender(); saveRadio('gender')">
+                            <label for="other">Other</label>
+                            <span id="genderMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Vaccinated-->
+                        <td>Vaccinated? <span style="color:#ffcccc;font-size:0.8em;">(required)</span></td>
+                        <td>
+                            <input type="radio" id="vaccineYes" name="vaccinated" value="yes"
+                                onchange="validateVaccinated(); saveRadio('vaccinated')">
+                            <label for="vaccineYes">Yes</label>&nbsp;&nbsp;
+
+                            <input type="radio" id="vaccineNo" name="vaccinated" value="no"
+                                onchange="validateVaccinated(); saveRadio('vaccinated')">
+                            <label for="vaccineNo">No</label>
+                            <span id="vaccinatedMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Insurance-->
+                        <td>Insurance? <span style="color:#ffcccc;font-size:0.8em;">(required)</span></td>
+                        <td>
+                            <input type="radio" id="insuranceYes" name="insurance" value="yes"
+                                onchange="validateInsurance(); saveRadio('insurance')">
+                            <label for="insuranceYes">Yes</label>&nbsp;&nbsp;
+
+                            <input type="radio" id="insuranceNo" name="insurance" value="no"
+                                onchange="validateInsurance(); saveRadio('insurance')">
+                            <label for="insuranceNo">No</label>
+                            <span id="insuranceMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Health Slider-->
+                        <td><label for="health">Rate your health<br><small>(1=poor, 10=excellent)</small></label></td>
+                        <td>
+                            <input type="range" id="health" name="health"
+                                min="1" max="10" value="5"
+                                title="Slide to rate your current overall health from 1 (very poor) to 10 (excellent)"
+                                oninput="updateHealth(this.value); saveField('health')">
+                            <span id="healthValue">5</span>
+                        </td>
+                    </tr>
+
+                    <tr><!--User ID-->
+                        <td><label for="userid">User ID:</label></td>
+                        <td>
+                            <input type="text" id="userid" name="userid"
+                                minlength="5" maxlength="30"
+                                pattern="[A-Za-z][A-Za-z0-9_-]{4,29}"
+                                title="User ID: 5-30 characters, must start with a letter, letters/numbers/underscores/dashes only, no spaces. Will be converted to lowercase."
+                                placeholder="e.g. jsmith_01 (5-30 chars, start with letter)"
+                                required
+                                onblur="validateUserID(); saveField('userid')"
+                                oninput="validateUserID()">
+                            <span id="useridMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Password — NOT saved to localStorage-->
+                        <td><label for="password">Password:</label></td>
+                        <td>
+                            <input type="password" id="password" name="password"
+                                minlength="8" maxlength="30"
+                                title="Password: 8-30 characters, must include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character (!@#%^&* etc). No quote characters allowed."
+                                placeholder="Min 8 chars, upper+lower+number+symbol"
+                                required
+                                onblur="validatePassword()"
+                                oninput="validatePassword()">
+                            <span id="passwordMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <tr><!--Confirm Password — NOT saved to localStorage-->
+                        <td><label for="confirmPassword">Re-enter Password:</label></td>
+                        <td>
+                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                title="Confirm password: must exactly match the password entered above"
+                                placeholder="Re-enter your password"
+                                required
+                                onblur="validateConfirmPassword()"
+                                oninput="validateConfirmPassword()">
+                            <span id="confirmPasswordMsg" class="errorMsg"></span>
+                        </td>
+                    </tr>
+
+                    <!-- Remember Me -->
+                    <tr>
+                        <td colspan="2" style="text-align:center; padding-top:10px;">
+                            <input type="checkbox" id="rememberMe" name="rememberMe" checked>
+                            <label for="rememberMe" style="font-weight:bold; cursor:pointer;">
+                                Remember Me — save my name for next visit
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr><!--Buttons-->
+                        <td colspan="2" style="text-align: center; padding-top: 15px;">
+                            <input type="reset" value="Clear" onclick="resetForm()">
+                            <button type="button" id="validateBtn" onclick="validateForm()">Validate</button>
+                            <input type="submit" id="submitBtn" value="Submit" style="display:none;">
+                            <button type="button" id="reviewButton" onclick="reviewForm()">Review</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>Cedarwood Medical Center</p>
+        <a href="mailto:dmpham8@cougarnet.uh.edu" class="email-btn">Contact Us</a>
+    </div>
+
+    <!--Review Modal-->
+    <div id="reviewForm" class="reviewForm">
+        <h2 class="reviewTitle">REVIEW FORM</h2>
+        <table id="reviewTable">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br>
+        <button type="button" onclick="closeReviewForm()">Close</button>
+    </div>
+</body>
+</html>
